@@ -23,6 +23,20 @@ resource "aws_vpc" "nano-vpc" {
   }
 }
 
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+resource "aws_subnet" "nano-subnet" {
+  vpc_id            = aws_vpc.nano-vpc.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = data.aws_availability_zones.available.names[0]
+
+  tags = {
+    Name = "Nano Main Subnet"
+  }
+}
+
 data "aws_ami" "amzn" {
   owners = ["amazon"]
   filter {
