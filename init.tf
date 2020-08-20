@@ -9,7 +9,18 @@ terraform {
 }
 
 provider "aws" {
-    region = "us-east-1"
+  region = "us-east-1"
+}
+
+resource "aws_vpc" "nano-vpc" {
+  cidr_block = "10.0.0.0/16"
+
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
+  tags = {
+    Name = "Nano VPC"
+  }
 }
 
 data "aws_ami" "amzn" {
@@ -21,7 +32,7 @@ data "aws_ami" "amzn" {
 }
 
 variable "ssh_pub_key" {
-  type = string 
+  type = string
 }
 
 resource "aws_key_pair" "jeogod-key" {
@@ -30,13 +41,13 @@ resource "aws_key_pair" "jeogod-key" {
 }
 
 resource "aws_instance" "nano_hs" {
-    ami           = data.aws_ami.amzn.id
-    instance_type = "t3a.nano"
-    key_name      = aws_key_pair.jeogod-key.key_name
-    tags = {
-        Name = "nano-hs"
-    }
-    depends_on = [aws_key_pair.jeogod-key]
+  ami           = data.aws_ami.amzn.id
+  instance_type = "t3a.nano"
+  key_name      = aws_key_pair.jeogod-key.key_name
+  tags = {
+    Name = "nano-hs"
+  }
+  depends_on = [aws_key_pair.jeogod-key]
 }
 
 /*
