@@ -1,4 +1,4 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.mkShell {
-  buildInputs = [ pkgs.terraform ];
+  buildInputs = [ pkgs.terraform pkgs.ansible ];
 }
