@@ -1,0 +1,15 @@
+---
+- hosts: nano_hs
+  remote_user: ec2-user
+  roles:
+    - role: "./roles/docker"
+      tags:
+        - docker
+    - role: "./roles/nginx"
+      tags:
+        - nginx
+    - role: "./roles/deploy"
+      tags:
+        - deploy
+
+

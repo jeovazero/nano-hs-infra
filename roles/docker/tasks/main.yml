@@ -1,0 +1,31 @@
+- name: Install docker
+  yum:
+    name: docker
+    state: present
+  become: true
+
+- name: Add user to docker group
+  user:
+    name: "ec2-user"
+    groups: 'docker'
+    append: 'yes'
+  become: true
+
+- name: Ensure docker deamon restart
+  service:
+    name: docker
+    state: restarted
+  become: true
+
+- name: Install docker stack/swarm deps
+  pip:
+    name:
+      - jsondiff
+      - pyyaml
+      - docker
+  become: true
+
+- name: Init the swarm
+  docker_swarm:
+    state: present
+    default_addr_pool: "172.0.0.0/16"

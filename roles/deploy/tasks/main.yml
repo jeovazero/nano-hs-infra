@@ -1,0 +1,15 @@
+ - name: Deploy Nano Stack 
+   docker_stack:
+     state: present
+     name: nano_hs_stack
+     compose:
+       - version: '3'
+         services:
+            bot:
+              image: jeovazero/pepe-haskeller:latest
+              volumes:
+                - /home/{{ ansible_user }}:/root
+              environment:
+                BOT_TOKEN: "{{ lookup('env', 'BOT_TOKEN') }}"
+                BOT_OUTPUT_DIR: "/root"
+                BOT_RESOURCE_DIR: "/data"

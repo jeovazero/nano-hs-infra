@@ -1,0 +1,17 @@
+- name: Install nginx
+  yum:
+    name: nginx
+    state: present
+  become: true
+
+- name: Sets Nginx conf file
+  template:
+    src: "templates/nginx.conf.j2"
+    dest: "/etc/nginx/conf.d/{{ hostname }}.conf"
+  become: true
+
+- name: Restart Nginx
+  become: true
+  service:
+    name: nginx
+    state: restarted
