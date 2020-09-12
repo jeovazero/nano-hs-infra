@@ -183,7 +183,6 @@ resource "aws_instance" "nano_hs" {
   depends_on = [aws_key_pair.jeogod-key, aws_route_table_association.nano-assoc]
 }
 
-/*
 resource "aws_eip" "nano_ip" {
     instance  = aws_instance.nano_hs.id
     depends_on = [aws_instance.nano_hs]
@@ -192,4 +191,3 @@ resource "aws_eip" "nano_ip" {
 output "nano_ip" {
   value = aws_eip.nano_ip.public_ip
 }
-*/
